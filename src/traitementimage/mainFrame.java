@@ -37,129 +37,148 @@ public class mainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        loadImageBtn = new javax.swing.JButton();
-        imgFin = new javax.swing.JLabel();
-        imgSrc = new javax.swing.JLabel();
-        depLabel = new javax.swing.JLabel();
-        finLabel = new javax.swing.JLabel();
-        leftArrow = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSlider2 = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        selectIcon = new javax.swing.JLabel();
+        selectPoint1 = new javax.swing.JLabel();
+        selectPoint2 = new javax.swing.JLabel();
+        loadImage = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        imgFin = new javax.swing.JLabel();
+        imgSrc = new javax.swing.JLabel();
+        depLabel = new javax.swing.JLabel();
+        finLabel = new javax.swing.JLabel();
+        arrowLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(34, 40, 49));
 
-        loadImageBtn.setText("Load Image");
-        loadImageBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadImageBtnActionPerformed(evt);
-            }
-        });
+        jPanel2.setBackground(new java.awt.Color(34, 40, 49));
 
-        imgFin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.setBackground(new java.awt.Color(57, 62, 70));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 117, -1, -1));
 
-        imgSrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        depLabel.setText("Image de départ");
-
-        finLabel.setText("Image de fin");
-
-        leftArrow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/arrowLeft.png"))); // NOI18N
-        leftArrow.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                leftArrowActionPerformed(evt);
-            }
-        });
-
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
         jLabel1.setText("Extraction");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 124, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(238, 238, 238));
         jLabel2.setText("00");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 124, -1, -1));
+        jPanel3.add(jSlider2, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 149, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(238, 238, 238));
         jLabel3.setText("Expansion");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 156, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(238, 238, 238));
         jLabel4.setText("00");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 156, -1, -1));
+
+        selectIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/selectionROI.png"))); // NOI18N
+        selectIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectIconMouseClicked(evt);
+            }
+        });
+        jPanel3.add(selectIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        selectPoint1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        selectPoint1.setForeground(new java.awt.Color(238, 238, 238));
+        selectPoint1.setText("X1:     Y1:");
+        jPanel3.add(selectPoint1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+
+        selectPoint2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        selectPoint2.setForeground(new java.awt.Color(238, 238, 238));
+        selectPoint2.setText("X2:     Y2:");
+        jPanel3.add(selectPoint2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
+
+        loadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/loadImage.png"))); // NOI18N
+        loadImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loadImageMouseClicked(evt);
+            }
+        });
+        jPanel3.add(loadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jPanel1.setBackground(null);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        imgFin.setBackground(new java.awt.Color(57, 62, 70));
+        imgFin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70)));
+        jPanel1.add(imgFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 500, 437));
+
+        imgSrc.setBackground(new java.awt.Color(57, 62, 70));
+        imgSrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70)));
+        jPanel1.add(imgSrc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 500, 437));
+
+        depLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        depLabel.setForeground(new java.awt.Color(238, 238, 238));
+        depLabel.setText("Image de départ");
+        jPanel1.add(depLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
+
+        finLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        finLabel.setForeground(new java.awt.Color(238, 238, 238));
+        finLabel.setText("Image de fin");
+        jPanel1.add(finLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
+
+        arrowLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/left-arrow.png"))); // NOI18N
+        jPanel1.add(arrowLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, -1, -1));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(depLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(imgSrc, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                                .addComponent(leftArrow, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(loadImageBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(finLabel)
-                            .addComponent(imgFin, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(37, Short.MAX_VALUE))))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(finLabel)
-                    .addComponent(depLabel))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(imgFin, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                            .addComponent(imgSrc, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(leftArrow, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loadImageBtn)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2))
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel4))
-                    .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(217, 217, 217))
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadImageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadImageBtnActionPerformed
-        
-
+    private void loadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadImageMouseClicked
         JFileChooser fc = new JFileChooser();
         int result = fc.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -174,12 +193,12 @@ public class mainFrame extends javax.swing.JFrame {
             Image dimg = img.getScaledInstance(imgSrc.getWidth(), imgSrc.getHeight(), Image.SCALE_SMOOTH);
             imgSrc.setIcon(new ImageIcon(dimg));
             imgFin.setIcon(new ImageIcon(dimg));
-        }        
-    }//GEN-LAST:event_loadImageBtnActionPerformed
+        }  
+    }//GEN-LAST:event_loadImageMouseClicked
 
-    private void leftArrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftArrowActionPerformed
-        imgSrc.setIcon(imgFin.getIcon());
-    }//GEN-LAST:event_leftArrowActionPerformed
+    private void selectIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectIconMouseClicked
+        new RegionSelectorListener(this.imgSrc);
+    }//GEN-LAST:event_selectIconMouseClicked
 
     /**
      * @param args the command line arguments
@@ -217,6 +236,7 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel arrowLabel;
     private javax.swing.JLabel depLabel;
     private javax.swing.JLabel finLabel;
     private javax.swing.JLabel imgFin;
@@ -225,9 +245,14 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
-    private javax.swing.JButton leftArrow;
-    private javax.swing.JButton loadImageBtn;
+    private javax.swing.JLabel loadImage;
+    private javax.swing.JLabel selectIcon;
+    private javax.swing.JLabel selectPoint1;
+    private javax.swing.JLabel selectPoint2;
     // End of variables declaration//GEN-END:variables
 }
