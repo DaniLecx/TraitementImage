@@ -9,28 +9,40 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author DaniLecx
  */
 public class RegionSelectorListener extends MouseAdapter {
-    final JLabel label;
 
-    public RegionSelectorListener(JLabel theLabel) {
-        this.label = theLabel;
-        theLabel.addMouseListener(this);
+    private final JTextField x1Selection;
+    private final JTextField y1Selection;
+    private final JTextField x2Selection;
+    private final JTextField y2Selection;
+    Point origin = null, origin2 = null;
+    
+    public RegionSelectorListener(JLabel clickedImg, JTextField x1Selection, JTextField y1Selection, JTextField x2Selection, JTextField y2Selection) {
+        clickedImg.addMouseListener(this);
+        this.x1Selection = x1Selection;
+        this.y1Selection = y1Selection;
+        this.x2Selection = x2Selection;
+        this.y2Selection = y2Selection;
     }
-
-    Point origin = null;
-
+    
     public void mouseClicked(MouseEvent event) {
         if (origin == null) { //If the first corner is not set...
 
             origin = event.getPoint(); //set it.
+            x1Selection.setText(String.valueOf(event.getX()));
+            y1Selection.setText(String.valueOf(event.getY()));
 
-        } else { //if the first corner is already set...
+        } else if (origin2 == null){ //if the first corner is already set...
 
+            origin2 = event.getPoint(); 
+            x2Selection.setText(String.valueOf(event.getX()));
+            y2Selection.setText(String.valueOf(event.getY()));
             //calculate width/height substracting from origin
             int width = event.getX() - origin.x;
             int height = event.getY() - origin.y;
