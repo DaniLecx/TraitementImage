@@ -5,15 +5,24 @@
  */
 package traitementimage;
 
-import java.awt.BorderLayout;
+import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Robot;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -24,8 +33,12 @@ public class mainFrame extends javax.swing.JFrame {
     /**
      * Creates new form mainFrame
      */
+    private boolean paletteEnabled;
+    
     public mainFrame() {
         initComponents();
+        getContentPane().setBackground(new Color(34,40,49));
+        paletteEnabled = false;
     }
 
     /**
@@ -36,8 +49,17 @@ public class mainFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        imgSrc = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        imgFin = new javax.swing.JLabel();
+        depLabel = new javax.swing.JLabel();
+        finLabel = new javax.swing.JLabel();
+        leftArrowLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
@@ -46,20 +68,67 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         selectIcon = new javax.swing.JLabel();
-        selectPoint1 = new javax.swing.JLabel();
-        selectPoint2 = new javax.swing.JLabel();
         loadImage = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        imgFin = new javax.swing.JLabel();
-        imgSrc = new javax.swing.JLabel();
-        depLabel = new javax.swing.JLabel();
-        finLabel = new javax.swing.JLabel();
-        arrowLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        paletteLabel = new javax.swing.JLabel();
+        srcColorPalette = new javax.swing.JLabel();
+        endColorPalette = new javax.swing.JLabel();
+        sizeXField = new javax.swing.JTextField();
+        sizeYField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel2.setBackground(new java.awt.Color(34, 40, 49));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, -1));
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 520));
+
+        imgSrc.setBackground(new java.awt.Color(57, 62, 70));
+        imgSrc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgSrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70)));
+        imgSrc.setOpaque(true);
+        imgSrc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imgSrcMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(imgSrc);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(520, 520));
+
+        imgFin.setBackground(new java.awt.Color(57, 62, 70));
+        imgFin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imgFin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70)));
+        imgFin.setOpaque(true);
+        jScrollPane2.setViewportView(imgFin);
+
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 30, -1, -1));
+
+        depLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        depLabel.setForeground(new java.awt.Color(238, 238, 238));
+        depLabel.setText("Image de départ");
+        jPanel2.add(depLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        finLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        finLabel.setForeground(new java.awt.Color(238, 238, 238));
+        finLabel.setText("Image de fin");
+        jPanel2.add(finLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, -1, -1));
+
+        leftArrowLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/left-arrow.png"))); // NOI18N
+        leftArrowLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                leftArrowLabelMouseClicked(evt);
+            }
+        });
+        jPanel2.add(leftArrowLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 250, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(57, 62, 70));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -94,16 +163,6 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jPanel3.add(selectIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
-        selectPoint1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        selectPoint1.setForeground(new java.awt.Color(238, 238, 238));
-        selectPoint1.setText("X1:     Y1:");
-        jPanel3.add(selectPoint1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
-
-        selectPoint2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        selectPoint2.setForeground(new java.awt.Color(238, 238, 238));
-        selectPoint2.setText("X2:     Y2:");
-        jPanel3.add(selectPoint2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
         loadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/loadImage.png"))); // NOI18N
         loadImage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -112,68 +171,70 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jPanel3.add(loadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        jPanel1.setBackground(null);
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jSeparator1.setBackground(new java.awt.Color(238, 238, 238));
+        jSeparator1.setForeground(new java.awt.Color(238, 238, 238));
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 20, 190));
 
-        imgFin.setBackground(new java.awt.Color(57, 62, 70));
-        imgFin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70)));
-        jPanel1.add(imgFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 500, 437));
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel5.setText("Taille");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
-        imgSrc.setBackground(new java.awt.Color(57, 62, 70));
-        imgSrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70)));
-        jPanel1.add(imgSrc, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 500, 437));
+        paletteLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel.setText("Palette");
+        paletteLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paletteLabelMouseClicked(evt);
+            }
+        });
+        jPanel3.add(paletteLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, -1, -1));
 
-        depLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        depLabel.setForeground(new java.awt.Color(238, 238, 238));
-        depLabel.setText("Image de départ");
-        jPanel1.add(depLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
+        srcColorPalette.setBackground(new java.awt.Color(255, 255, 255));
+        srcColorPalette.setOpaque(true);
+        jPanel3.add(srcColorPalette, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 40, 20));
 
-        finLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        finLabel.setForeground(new java.awt.Color(238, 238, 238));
-        finLabel.setText("Image de fin");
-        jPanel1.add(finLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, -1, -1));
+        endColorPalette.setBackground(new java.awt.Color(255, 0, 0));
+        endColorPalette.setOpaque(true);
+        endColorPalette.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                endColorPaletteMouseClicked(evt);
+            }
+        });
+        jPanel3.add(endColorPalette, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 50, 40, 20));
 
-        arrowLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/left-arrow.png"))); // NOI18N
-        jPanel1.add(arrowLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, -1, -1));
+        sizeXField.setForeground(new java.awt.Color(238, 238, 238));
+        sizeXField.setText("x");
+        sizeXField.setCaretColor(new java.awt.Color(238, 238, 238));
+        sizeXField.setOpaque(false);
+        sizeXField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sizeXFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(sizeXField, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 40, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        sizeYField.setForeground(new java.awt.Color(238, 238, 238));
+        sizeYField.setText("y");
+        sizeYField.setCaretColor(new java.awt.Color(238, 238, 238));
+        sizeYField.setOpaque(false);
+        sizeYField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sizeYFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(sizeYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 40, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 1080, 214));
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        getContentPane().add(jPanel2, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -190,9 +251,10 @@ public class mainFrame extends javax.swing.JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Image dimg = img.getScaledInstance(imgSrc.getWidth(), imgSrc.getHeight(), Image.SCALE_SMOOTH);
-            imgSrc.setIcon(new ImageIcon(dimg));
-            imgFin.setIcon(new ImageIcon(dimg));
+            sizeXField.setText(String.valueOf(img.getWidth()));
+            sizeYField.setText(String.valueOf(img.getHeight()));
+            imgSrc.setIcon(new ImageIcon(img));
+            imgFin.setIcon(new ImageIcon(img));
         }  
     }//GEN-LAST:event_loadImageMouseClicked
 
@@ -200,6 +262,92 @@ public class mainFrame extends javax.swing.JFrame {
         new RegionSelectorListener(this.imgSrc);
     }//GEN-LAST:event_selectIconMouseClicked
 
+    private void sizeXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeXFieldActionPerformed
+        updateImageSize();
+    }//GEN-LAST:event_sizeXFieldActionPerformed
+
+    private void sizeYFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeYFieldActionPerformed
+        updateImageSize();
+    }//GEN-LAST:event_sizeYFieldActionPerformed
+
+    private void paletteLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabelMouseClicked
+        if(paletteEnabled)
+        {
+            paletteLabel.setForeground(new Color(238, 238, 238));
+            paletteEnabled = false;
+        }
+        else
+        {
+            paletteLabel.setForeground(new Color(0, 173, 181));
+            paletteEnabled = true;
+        }
+    }//GEN-LAST:event_paletteLabelMouseClicked
+
+    private void imgSrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgSrcMouseClicked
+        if(paletteEnabled)
+        {
+            Point loc = evt.getLocationOnScreen();
+            
+            Robot robot;
+            Color color = Color.WHITE;
+            try {
+                robot = new Robot();
+                color = robot.getPixelColor((int)loc.getX(), (int)loc.getY());
+            } catch (AWTException ex) {
+                Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            srcColorPalette.setBackground(color);
+
+            replaceColor();
+        }
+    }//GEN-LAST:event_imgSrcMouseClicked
+
+    private void endColorPaletteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_endColorPaletteMouseClicked
+        Color newColor = JColorChooser.showDialog(null, "Choose a color", Color.RED);
+        endColorPalette.setBackground(newColor);
+        if(paletteEnabled)
+            replaceColor();
+    }//GEN-LAST:event_endColorPaletteMouseClicked
+
+    private void leftArrowLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leftArrowLabelMouseClicked
+        ImageIcon icon = (ImageIcon) imgFin.getIcon();
+        BufferedImage img = (BufferedImage) icon.getImage();
+        imgSrc.setIcon(new ImageIcon(img));
+    }//GEN-LAST:event_leftArrowLabelMouseClicked
+
+    private void updateImageSize()
+    {
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = (BufferedImage) icon.getImage();
+        Image scaledImg = img.getScaledInstance(Integer.parseInt(sizeXField.getText()), Integer.parseInt(sizeYField.getText()), Image.SCALE_SMOOTH);
+        imgFin.setIcon(new ImageIcon(scaledImg));
+        
+    }
+    
+    private void replaceColor()
+    {
+        int inputRGB = srcColorPalette.getBackground().getRGB();
+        int outputRGB = endColorPalette.getBackground().getRGB();
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = (BufferedImage) icon.getImage();
+        
+        BufferedImage argbImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = argbImage.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        g.dispose();
+        
+        for (int i = 0; i < img.getHeight(); i++) {
+            for (int j = 0; j < img.getWidth(); j++) {
+                if(img.getRGB(i, j) == inputRGB)
+                {
+                    argbImage.setRGB(i, j, outputRGB);
+                }
+            }
+        }
+        
+        imgFin.setIcon(new ImageIcon(argbImage));
+    }
     /**
      * @param args the command line arguments
      */
@@ -210,12 +358,7 @@ public class mainFrame extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -236,8 +379,8 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel arrowLabel;
     private javax.swing.JLabel depLabel;
+    private javax.swing.JLabel endColorPalette;
     private javax.swing.JLabel finLabel;
     private javax.swing.JLabel imgFin;
     private javax.swing.JLabel imgSrc;
@@ -245,14 +388,21 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
+    private javax.swing.JLabel leftArrowLabel;
     private javax.swing.JLabel loadImage;
+    private javax.swing.JLabel paletteLabel;
     private javax.swing.JLabel selectIcon;
-    private javax.swing.JLabel selectPoint1;
-    private javax.swing.JLabel selectPoint2;
+    private javax.swing.JTextField sizeXField;
+    private javax.swing.JTextField sizeYField;
+    private javax.swing.JLabel srcColorPalette;
     // End of variables declaration//GEN-END:variables
 }
