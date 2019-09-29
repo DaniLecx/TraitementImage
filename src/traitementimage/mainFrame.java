@@ -62,7 +62,6 @@ public class mainFrame extends javax.swing.JFrame {
         finLabel = new javax.swing.JLabel();
         leftArrowLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        selectIcon = new javax.swing.JLabel();
         loadImage = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
@@ -131,14 +130,6 @@ public class mainFrame extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(57, 62, 70));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        selectIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/selectionROI.png"))); // NOI18N
-        selectIcon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                selectIconMouseClicked(evt);
-            }
-        });
-        jPanel3.add(selectIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         loadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/loadImage.png"))); // NOI18N
         loadImage.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -244,14 +235,6 @@ public class mainFrame extends javax.swing.JFrame {
             imgFin.setIcon(new ImageIcon(img));
         }  
     }//GEN-LAST:event_loadImageMouseClicked
-
-    private void selectIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectIconMouseClicked
-
-        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
-        BufferedImage fullImage = getBufferedImage(icon);
-        BufferedImage newImage = fullImage.getSubimage(0, 0, 100, 100);
-        imgFin.setIcon(new ImageIcon(newImage));
-    }//GEN-LAST:event_selectIconMouseClicked
 
     private void sizeXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeXFieldActionPerformed
         updateImageSize();
@@ -449,7 +432,6 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel loadImage;
     private javax.swing.JLabel paletteLabel;
     private javax.swing.JLabel roiLabel;
-    private javax.swing.JLabel selectIcon;
     private javax.swing.JTextField sizeXField;
     private javax.swing.JTextField sizeYField;
     private javax.swing.JLabel srcColorPalette;
