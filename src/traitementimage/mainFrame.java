@@ -316,7 +316,7 @@ public class mainFrame extends javax.swing.JFrame {
            int x, y, width, height;
            x = (mousePressed.getX() < mouseReleased.getX())? (int)mousePressed.getX() : (int)mouseReleased.getX();
            width = (int) Math.abs(mousePressed.getX() - mouseReleased.getX());
-           y = (mousePressed.getY() < mouseReleased.getX())? (int)mousePressed.getY() : (int)mouseReleased.getY();
+           y = (mousePressed.getY() < mouseReleased.getY())? (int)mousePressed.getY() : (int)mouseReleased.getY();
            height = (int) Math.abs(mousePressed.getY() - mouseReleased.getY());
            if(fullImage.getWidth() < 512)
                 x -= 256-fullImage.getWidth()/2;
