@@ -7,11 +7,11 @@ package traitementimage;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Robot;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +21,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
 
 /**
  *
@@ -33,12 +33,14 @@ public class mainFrame extends javax.swing.JFrame {
     /**
      * Creates new form mainFrame
      */
-    private boolean paletteEnabled;
+    private boolean paletteEnabled, roiEnabled;
+    private Point mousePressed, mouseReleased;
     
     public mainFrame() {
         initComponents();
         getContentPane().setBackground(new Color(34,40,49));
-        paletteEnabled = false;
+        paletteEnabled = roiEnabled = false;
+        
     }
 
     /**
@@ -52,7 +54,6 @@ public class mainFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         imgSrc = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -61,12 +62,6 @@ public class mainFrame extends javax.swing.JFrame {
         finLabel = new javax.swing.JLabel();
         leftArrowLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jSlider1 = new javax.swing.JSlider();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jSlider2 = new javax.swing.JSlider();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         selectIcon = new javax.swing.JLabel();
         loadImage = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -76,6 +71,7 @@ public class mainFrame extends javax.swing.JFrame {
         endColorPalette = new javax.swing.JLabel();
         sizeXField = new javax.swing.JTextField();
         sizeYField = new javax.swing.JTextField();
+        roiLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
@@ -83,9 +79,6 @@ public class mainFrame extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(34, 40, 49));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, -1, -1));
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(520, 520));
 
@@ -96,6 +89,12 @@ public class mainFrame extends javax.swing.JFrame {
         imgSrc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 imgSrcMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                imgSrcMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                imgSrcMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(imgSrc);
@@ -132,28 +131,6 @@ public class mainFrame extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(57, 62, 70));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 117, -1, -1));
-
-        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel1.setText("Extraction");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 124, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel2.setText("00");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 124, -1, -1));
-        jPanel3.add(jSlider2, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 149, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel3.setText("Expansion");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 156, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel4.setText("00");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 156, -1, -1));
 
         selectIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/traitementimage/images/selectionROI.png"))); // NOI18N
         selectIcon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -226,6 +203,16 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jPanel3.add(sizeYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 40, -1));
 
+        roiLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        roiLabel.setForeground(new java.awt.Color(238, 238, 238));
+        roiLabel.setText("ROI");
+        roiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roiLabelMouseClicked(evt);
+            }
+        });
+        jPanel3.add(roiLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
+
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 1080, 214));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -259,7 +246,11 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_loadImageMouseClicked
 
     private void selectIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectIconMouseClicked
-        new RegionSelectorListener(this.imgSrc);
+
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage fullImage = getBufferedImage(icon);
+        BufferedImage newImage = fullImage.getSubimage(0, 0, 100, 100);
+        imgFin.setIcon(new ImageIcon(newImage));
     }//GEN-LAST:event_selectIconMouseClicked
 
     private void sizeXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeXFieldActionPerformed
@@ -312,14 +303,62 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void leftArrowLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leftArrowLabelMouseClicked
         ImageIcon icon = (ImageIcon) imgFin.getIcon();
-        BufferedImage img = (BufferedImage) icon.getImage();
-        imgSrc.setIcon(new ImageIcon(img));
+        BufferedImage img = getBufferedImage(icon);
+        Image scaledImg = img.getScaledInstance(icon.getIconWidth(), icon.getIconHeight(), Image.SCALE_SMOOTH);
+        imgSrc.setIcon(new ImageIcon(scaledImg));
     }//GEN-LAST:event_leftArrowLabelMouseClicked
+
+    private void roiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roiLabelMouseClicked
+        if(roiEnabled)
+        {
+            roiLabel.setForeground(new Color(238, 238, 238));
+            roiEnabled = false;
+        }
+        else
+        {
+            roiLabel.setForeground(new Color(0, 173, 181));
+            roiEnabled = true;
+            
+        }
+    }//GEN-LAST:event_roiLabelMouseClicked
+
+    private void imgSrcMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgSrcMouseReleased
+       if(roiEnabled)
+       {
+           mouseReleased = evt.getPoint();
+           
+           
+           ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+           BufferedImage fullImage = getBufferedImage(icon);
+           int x, y, width, height;
+           x = (mousePressed.getX() < mouseReleased.getX())? (int)mousePressed.getX() : (int)mouseReleased.getX();
+           width = (int) Math.abs(mousePressed.getX() - mouseReleased.getX());
+           y = (mousePressed.getY() < mouseReleased.getX())? (int)mousePressed.getY() : (int)mouseReleased.getY();
+           height = (int) Math.abs(mousePressed.getY() - mouseReleased.getY());
+           if(fullImage.getWidth() < 512)
+                x -= 256-fullImage.getWidth()/2;
+
+           if(fullImage.getHeight()< 512)
+                y -= 256-fullImage.getWidth()/2;
+           
+           
+           BufferedImage newImage = fullImage.getSubimage(x, y, width, height);
+           imgFin.setIcon(new ImageIcon(newImage));
+           
+       }
+    }//GEN-LAST:event_imgSrcMouseReleased
+
+    private void imgSrcMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgSrcMousePressed
+        if(roiEnabled)
+        {
+            mousePressed = evt.getPoint();
+        }
+    }//GEN-LAST:event_imgSrcMousePressed
 
     private void updateImageSize()
     {
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
-        BufferedImage img = (BufferedImage) icon.getImage();
+        BufferedImage img = getBufferedImage(icon);
         Image scaledImg = img.getScaledInstance(Integer.parseInt(sizeXField.getText()), Integer.parseInt(sizeYField.getText()), Image.SCALE_SMOOTH);
         imgFin.setIcon(new ImageIcon(scaledImg));
         
@@ -330,7 +369,7 @@ public class mainFrame extends javax.swing.JFrame {
         int inputRGB = srcColorPalette.getBackground().getRGB();
         int outputRGB = endColorPalette.getBackground().getRGB();
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
-        BufferedImage img = (BufferedImage) icon.getImage();
+        BufferedImage img = getBufferedImage(icon);
         
         BufferedImage argbImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = argbImage.createGraphics();
@@ -347,6 +386,20 @@ public class mainFrame extends javax.swing.JFrame {
         }
         
         imgFin.setIcon(new ImageIcon(argbImage));
+    }
+    
+    private BufferedImage getBufferedImage(ImageIcon icon)
+    {
+        BufferedImage bi = new BufferedImage(
+        icon.getIconWidth(),
+        icon.getIconHeight(),
+        BufferedImage.TYPE_INT_RGB);
+        
+        Graphics g = bi.createGraphics();
+        // paint the Icon to the BufferedImage.
+        icon.paintIcon(null, g, 0,0);
+        g.dispose();
+        return bi;
     }
     /**
      * @param args the command line arguments
@@ -373,7 +426,9 @@ public class mainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new mainFrame().setVisible(true);
+                mainFrame frame = new mainFrame();
+                frame.setLocationRelativeTo(null); // Center of the screen
+                frame.setVisible(true);
             }
         });
     }
@@ -384,22 +439,16 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel finLabel;
     private javax.swing.JLabel imgFin;
     private javax.swing.JLabel imgSrc;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JSlider jSlider2;
     private javax.swing.JLabel leftArrowLabel;
     private javax.swing.JLabel loadImage;
     private javax.swing.JLabel paletteLabel;
+    private javax.swing.JLabel roiLabel;
     private javax.swing.JLabel selectIcon;
     private javax.swing.JTextField sizeXField;
     private javax.swing.JTextField sizeYField;
