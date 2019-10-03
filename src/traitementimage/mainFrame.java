@@ -71,6 +71,12 @@ public class mainFrame extends javax.swing.JFrame {
         sizeXField = new javax.swing.JTextField();
         sizeYField = new javax.swing.JTextField();
         roiLabel = new javax.swing.JLabel();
+        paletteLabel1 = new javax.swing.JLabel();
+        paletteLabel2 = new javax.swing.JLabel();
+        extractionYField = new javax.swing.JTextField();
+        extractionXField = new javax.swing.JTextField();
+        expansionXField = new javax.swing.JTextField();
+        expansionYField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
@@ -151,13 +157,13 @@ public class mainFrame extends javax.swing.JFrame {
 
         paletteLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel.setForeground(new java.awt.Color(238, 238, 238));
-        paletteLabel.setText("Palette");
+        paletteLabel.setText("Extraction");
         paletteLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 paletteLabelMouseClicked(evt);
             }
         });
-        jPanel3.add(paletteLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, -1, -1));
+        jPanel3.add(paletteLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, -1, -1));
 
         srcColorPalette.setBackground(new java.awt.Color(255, 255, 255));
         srcColorPalette.setOpaque(true);
@@ -203,6 +209,42 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
         jPanel3.add(roiLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
+
+        paletteLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel1.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel1.setText("Palette");
+        paletteLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paletteLabel1MouseClicked(evt);
+            }
+        });
+        jPanel3.add(paletteLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, -1, -1));
+
+        paletteLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel2.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel2.setText("Expansion");
+        paletteLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paletteLabel2MouseClicked(evt);
+            }
+        });
+        jPanel3.add(paletteLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 20, -1, -1));
+        jPanel3.add(extractionYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, 40, -1));
+        jPanel3.add(extractionXField, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 50, 40, -1));
+
+        expansionXField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expansionXFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(expansionXField, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 20, 40, -1));
+
+        expansionYField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expansionYFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(expansionYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, 40, -1));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 1080, 214));
 
@@ -338,6 +380,22 @@ public class mainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_imgSrcMousePressed
 
+    private void paletteLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paletteLabel1MouseClicked
+
+    private void paletteLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paletteLabel2MouseClicked
+
+    private void expansionXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionXFieldActionPerformed
+        bilinearInterpolation();
+    }//GEN-LAST:event_expansionXFieldActionPerformed
+
+    private void expansionYFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionYFieldActionPerformed
+        bilinearInterpolation();
+    }//GEN-LAST:event_expansionYFieldActionPerformed
+
     private void updateImageSize()
     {
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
@@ -384,6 +442,16 @@ public class mainFrame extends javax.swing.JFrame {
         g.dispose();
         return bi;
     }
+    
+    private void bilinearInterpolation()
+    {
+        String x, y;
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        x = this.expansionXField.getText();
+        y = this.expansionYField.getText();
+        this.imgFin.setIcon(new ImageIcon(BilinearInterpolation.scale(img, Float.parseFloat(x) , Float.parseFloat(y))));
+    }
     /**
      * @param args the command line arguments
      */
@@ -419,6 +487,10 @@ public class mainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel depLabel;
     private javax.swing.JLabel endColorPalette;
+    private javax.swing.JTextField expansionXField;
+    private javax.swing.JTextField expansionYField;
+    private javax.swing.JTextField extractionXField;
+    private javax.swing.JTextField extractionYField;
     private javax.swing.JLabel finLabel;
     private javax.swing.JLabel imgFin;
     private javax.swing.JLabel imgSrc;
@@ -431,6 +503,8 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel leftArrowLabel;
     private javax.swing.JLabel loadImage;
     private javax.swing.JLabel paletteLabel;
+    private javax.swing.JLabel paletteLabel1;
+    private javax.swing.JLabel paletteLabel2;
     private javax.swing.JLabel roiLabel;
     private javax.swing.JTextField sizeXField;
     private javax.swing.JTextField sizeYField;
