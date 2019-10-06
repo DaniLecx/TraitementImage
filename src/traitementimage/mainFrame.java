@@ -34,6 +34,7 @@ public class mainFrame extends javax.swing.JFrame {
      * Creates new form mainFrame
      */
     private boolean paletteEnabled, roiEnabled;
+    private int minValue, maxValue;
     private Point mousePressed, mouseReleased;
     
     public mainFrame() {
@@ -230,9 +231,7 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jPanel3.add(histogramLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, -1, -1));
 
-        histogram.setBackground(null);
-        histogram.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        histogram.setOpaque(true);
+        histogram.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 40, 49)));
         jPanel3.add(histogram, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 260, 100));
 
         roiLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -272,31 +271,16 @@ public class mainFrame extends javax.swing.JFrame {
         paletteLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel3.setForeground(new java.awt.Color(238, 238, 238));
         paletteLabel3.setText("Multi-seuillage");
-        paletteLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                paletteLabel3MouseClicked(evt);
-            }
-        });
         jPanel3.add(paletteLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, -1, -1));
 
         paletteLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel4.setForeground(new java.awt.Color(238, 238, 238));
         paletteLabel4.setText("Zoom");
-        paletteLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                paletteLabel4MouseClicked(evt);
-            }
-        });
         jPanel3.add(paletteLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
 
         paletteLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel5.setForeground(new java.awt.Color(238, 238, 238));
         paletteLabel5.setText("Seuillage simple");
-        paletteLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                paletteLabel5MouseClicked(evt);
-            }
-        });
         jPanel3.add(paletteLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, -1, -1));
 
         expansionXField1.setForeground(new java.awt.Color(238, 238, 238));
@@ -484,8 +468,8 @@ public class mainFrame extends javax.swing.JFrame {
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
         BufferedImage img = getBufferedImage(icon);
         int r, g, b, rgba, average;
-        for (int i = 0; i < img.getHeight(); i++) {
-            for (int j = 0; j < img.getWidth(); j++) {
+        for (int i = 0; i < img.getWidth(); i++) {
+            for (int j = 0; j < img.getHeight(); j++) {
                 rgba = img.getRGB(i, j);
                 r = (rgba >> 16) & 0x000000FF;
                 g = (rgba >> 8) & 0x000000FF;
@@ -503,31 +487,36 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_sizeXFieldActionPerformed
 
     private void multiSeuil2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiSeuil2ActionPerformed
-        // TODO add your handling code here:
+        multiSeuillage();
     }//GEN-LAST:event_multiSeuil2ActionPerformed
 
-    private void paletteLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_paletteLabel3MouseClicked
-
-    private void paletteLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_paletteLabel4MouseClicked
-
-    private void paletteLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_paletteLabel5MouseClicked
-
     private void expansionXField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionXField1ActionPerformed
-        updateHistogram();
+        bilinearInterpolation();
     }//GEN-LAST:event_expansionXField1ActionPerformed
 
     private void seuilSimpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seuilSimpleActionPerformed
-        // TODO add your handling code here:
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        int rgba;
+        int seuil = Integer.parseInt(seuilSimple.getText());
+        
+        for (int i = 0; i < img.getWidth(); i++) {
+            for (int j = 0; j < img.getHeight(); j++) {
+                rgba = img.getRGB(i, j);
+                if((rgba & 0xFF) < seuil)
+                    img.setRGB(i, j, (rgba & 0xFF000000));
+                else
+                    img.setRGB(i, j, ((rgba & 0xFF000000) + 0x00FFFFFF));
+            }
+        }
+        
+        imgFin.setIcon(new ImageIcon(img));
+        
+        updateHistogram();
     }//GEN-LAST:event_seuilSimpleActionPerformed
 
     private void multiSeuil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiSeuil1ActionPerformed
-        // TODO add your handling code here:
+        multiSeuillage();
     }//GEN-LAST:event_multiSeuil1ActionPerformed
 
     private void updateImageSize()
@@ -591,20 +580,33 @@ public class mainFrame extends javax.swing.JFrame {
     {
         int[] values = new int[256];
         int highValue = 0;
-        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        ImageIcon icon = (ImageIcon) imgFin.getIcon();
         BufferedImage img = getBufferedImage(icon);
         
         // Get pixel number of same color
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 //System.out.println((img.getRGB(i, j) & 0x000000FF));
-                values[img.getRGB(i, j) & 0x000000FF]++; // Add 1 to that color in values
+                values[img.getRGB(i, j) & 0xFF]++; // Add 1 to that color in values
             }
         }
         
         // Get color with most pixels
         for(int i = 0; i < values.length; i++)
         {
+            if(values[i] > 0) // Get min and max values for equalisation
+            {
+                maxValue = i;
+                
+                if(minValue != -1)
+                {
+                    if(i == 0)
+                        minValue = 0;
+                    else
+                        minValue = i;
+                }
+            }
+                    
             if(values[i] > values[highValue])
                 highValue = i;
         }
@@ -622,9 +624,38 @@ public class mainFrame extends javax.swing.JFrame {
         }
         g2d.dispose();
         histogram.setIcon(new ImageIcon(histo));
+    }
+    
+    private void multiSeuillage()
+    {
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        int rgba;
+        int seuil1 = Integer.parseInt(multiSeuil1.getText());
+        int seuil2 = Integer.parseInt(multiSeuil2.getText());
         
+        for (int i = 0; i < img.getWidth(); i++) {
+            for (int j = 0; j < img.getHeight(); j++) {
+                rgba = img.getRGB(i, j);
+                if((rgba & 0xFF) < seuil1)
+                    img.setRGB(i, j, (rgba & 0xFF000000));
+                else if((rgba & 0xFF) > seuil2)
+                    img.setRGB(i, j, ((rgba & 0xFF000000) + 0xFFFFFF));
+                else
+                    img.setRGB(i, j, (rgba & 0xFF000000) + 0x7F7F7F);
+                    
+            }
+        }
         
- 
+        imgFin.setIcon(new ImageIcon(img));
+        
+        updateHistogram();
+    }
+    
+    private void histogramEgalisation()
+    {
+        int dyn = maxValue-minValue;
+        
     }
     /**
      * @param args the command line arguments
