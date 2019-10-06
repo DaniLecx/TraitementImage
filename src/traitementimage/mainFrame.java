@@ -65,18 +65,28 @@ public class mainFrame extends javax.swing.JFrame {
         loadImage = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        paletteLabel = new javax.swing.JLabel();
         srcColorPalette = new javax.swing.JLabel();
         endColorPalette = new javax.swing.JLabel();
         sizeXField = new javax.swing.JTextField();
         sizeYField = new javax.swing.JTextField();
-        roiLabel = new javax.swing.JLabel();
+        grayScaleLabel = new javax.swing.JLabel();
         paletteLabel1 = new javax.swing.JLabel();
-        paletteLabel2 = new javax.swing.JLabel();
-        extractionYField = new javax.swing.JTextField();
-        extractionXField = new javax.swing.JTextField();
-        expansionXField = new javax.swing.JTextField();
+        histogramLabel = new javax.swing.JLabel();
+        histogram = new javax.swing.JLabel();
+        roiLabel1 = new javax.swing.JLabel();
+        highValueLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        paletteLabel3 = new javax.swing.JLabel();
+        paletteLabel4 = new javax.swing.JLabel();
+        paletteLabel5 = new javax.swing.JLabel();
+        expansionXField1 = new javax.swing.JTextField();
         expansionYField = new javax.swing.JTextField();
+        seuilSimple = new javax.swing.JTextField();
+        multiSeuil1 = new javax.swing.JTextField();
+        multiSeuil2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
@@ -155,16 +165,6 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel5.setText("Taille");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, -1));
 
-        paletteLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        paletteLabel.setForeground(new java.awt.Color(238, 238, 238));
-        paletteLabel.setText("Extraction");
-        paletteLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                paletteLabelMouseClicked(evt);
-            }
-        });
-        jPanel3.add(paletteLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 50, -1, -1));
-
         srcColorPalette.setBackground(new java.awt.Color(255, 255, 255));
         srcColorPalette.setOpaque(true);
         jPanel3.add(srcColorPalette, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 40, 20));
@@ -200,15 +200,15 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jPanel3.add(sizeYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 40, -1));
 
-        roiLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        roiLabel.setForeground(new java.awt.Color(238, 238, 238));
-        roiLabel.setText("ROI");
-        roiLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        grayScaleLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        grayScaleLabel.setForeground(new java.awt.Color(238, 238, 238));
+        grayScaleLabel.setText("Grayscale");
+        grayScaleLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                roiLabelMouseClicked(evt);
+                grayScaleLabelMouseClicked(evt);
             }
         });
-        jPanel3.add(roiLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
+        jPanel3.add(grayScaleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, -1, -1));
 
         paletteLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel1.setForeground(new java.awt.Color(238, 238, 238));
@@ -220,31 +220,134 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jPanel3.add(paletteLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, -1, -1));
 
-        paletteLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        paletteLabel2.setForeground(new java.awt.Color(238, 238, 238));
-        paletteLabel2.setText("Expansion");
-        paletteLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+        histogramLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        histogramLabel.setForeground(new java.awt.Color(238, 238, 238));
+        histogramLabel.setText("Histogramme");
+        histogramLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                paletteLabel2MouseClicked(evt);
+                histogramLabelMouseClicked(evt);
             }
         });
-        jPanel3.add(paletteLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 20, -1, -1));
-        jPanel3.add(extractionYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 50, 40, -1));
-        jPanel3.add(extractionXField, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 50, 40, -1));
+        jPanel3.add(histogramLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, -1, -1));
 
-        expansionXField.addActionListener(new java.awt.event.ActionListener() {
+        histogram.setBackground(null);
+        histogram.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        histogram.setOpaque(true);
+        jPanel3.add(histogram, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 260, 100));
+
+        roiLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        roiLabel1.setForeground(new java.awt.Color(238, 238, 238));
+        roiLabel1.setText("ROI");
+        roiLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roiLabel1MouseClicked(evt);
+            }
+        });
+        jPanel3.add(roiLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
+
+        highValueLabel.setForeground(new java.awt.Color(238, 238, 238));
+        highValueLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel3.add(highValueLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 50, 20));
+
+        jLabel2.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("0");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, -1, -1));
+
+        jLabel3.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Pixels");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, -1, -1));
+
+        jLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("255");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, -1, -1));
+
+        jLabel6.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Nuance de gris");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
+
+        paletteLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel3.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel3.setText("Multi-seuillage");
+        paletteLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paletteLabel3MouseClicked(evt);
+            }
+        });
+        jPanel3.add(paletteLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, -1, -1));
+
+        paletteLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel4.setText("Zoom");
+        paletteLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paletteLabel4MouseClicked(evt);
+            }
+        });
+        jPanel3.add(paletteLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
+
+        paletteLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel5.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel5.setText("Seuillage simple");
+        paletteLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                paletteLabel5MouseClicked(evt);
+            }
+        });
+        jPanel3.add(paletteLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, -1, -1));
+
+        expansionXField1.setForeground(new java.awt.Color(238, 238, 238));
+        expansionXField1.setCaretColor(new java.awt.Color(238, 238, 238));
+        expansionXField1.setOpaque(false);
+        expansionXField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expansionXFieldActionPerformed(evt);
+                expansionXField1ActionPerformed(evt);
             }
         });
-        jPanel3.add(expansionXField, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 20, 40, -1));
+        jPanel3.add(expansionXField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 20, 40, -1));
 
+        expansionYField.setForeground(new java.awt.Color(238, 238, 238));
+        expansionYField.setCaretColor(new java.awt.Color(238, 238, 238));
+        expansionYField.setOpaque(false);
         expansionYField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 expansionYFieldActionPerformed(evt);
             }
         });
         jPanel3.add(expansionYField, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 20, 40, -1));
+
+        seuilSimple.setForeground(new java.awt.Color(238, 238, 238));
+        seuilSimple.setCaretColor(new java.awt.Color(238, 238, 238));
+        seuilSimple.setOpaque(false);
+        seuilSimple.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seuilSimpleActionPerformed(evt);
+            }
+        });
+        jPanel3.add(seuilSimple, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 50, 40, -1));
+
+        multiSeuil1.setForeground(new java.awt.Color(238, 238, 238));
+        multiSeuil1.setCaretColor(new java.awt.Color(238, 238, 238));
+        multiSeuil1.setOpaque(false);
+        multiSeuil1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                multiSeuil1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(multiSeuil1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 40, -1));
+
+        multiSeuil2.setForeground(new java.awt.Color(238, 238, 238));
+        multiSeuil2.setCaretColor(new java.awt.Color(238, 238, 238));
+        multiSeuil2.setOpaque(false);
+        multiSeuil2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                multiSeuil2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(multiSeuil2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 80, 40, -1));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 1080, 214));
 
@@ -275,29 +378,17 @@ public class mainFrame extends javax.swing.JFrame {
             sizeYField.setText(String.valueOf(img.getHeight()));
             imgSrc.setIcon(new ImageIcon(img));
             imgFin.setIcon(new ImageIcon(img));
+            updateHistogram();
         }  
     }//GEN-LAST:event_loadImageMouseClicked
 
-    private void sizeXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeXFieldActionPerformed
-        updateImageSize();
-    }//GEN-LAST:event_sizeXFieldActionPerformed
+    private void expansionYFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionYFieldActionPerformed
+        bilinearInterpolation();
+    }//GEN-LAST:event_expansionYFieldActionPerformed
 
     private void sizeYFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeYFieldActionPerformed
         updateImageSize();
     }//GEN-LAST:event_sizeYFieldActionPerformed
-
-    private void paletteLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabelMouseClicked
-        if(paletteEnabled)
-        {
-            paletteLabel.setForeground(new Color(238, 238, 238));
-            paletteEnabled = false;
-        }
-        else
-        {
-            paletteLabel.setForeground(new Color(0, 173, 181));
-            paletteEnabled = true;
-        }
-    }//GEN-LAST:event_paletteLabelMouseClicked
 
     private void imgSrcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgSrcMouseClicked
         if(paletteEnabled)
@@ -333,20 +424,6 @@ public class mainFrame extends javax.swing.JFrame {
         imgSrc.setIcon(new ImageIcon(scaledImg));
     }//GEN-LAST:event_leftArrowLabelMouseClicked
 
-    private void roiLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roiLabelMouseClicked
-        if(roiEnabled)
-        {
-            roiLabel.setForeground(new Color(238, 238, 238));
-            roiEnabled = false;
-        }
-        else
-        {
-            roiLabel.setForeground(new Color(0, 173, 181));
-            roiEnabled = true;
-            
-        }
-    }//GEN-LAST:event_roiLabelMouseClicked
-
     private void imgSrcMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgSrcMouseReleased
        if(roiEnabled)
        {
@@ -381,20 +458,77 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_imgSrcMousePressed
 
     private void paletteLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel1MouseClicked
-        // TODO add your handling code here:
+
+        if(paletteEnabled)
+        {
+            paletteLabel1.setForeground(new Color(238, 238, 238));
+            paletteEnabled = false;
+        }
+        else
+        {
+            paletteLabel1.setForeground(new Color(0, 173, 181));
+            paletteEnabled = true;
+            
+        }
     }//GEN-LAST:event_paletteLabel1MouseClicked
 
-    private void paletteLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel2MouseClicked
+    private void histogramLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_histogramLabelMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_paletteLabel2MouseClicked
+    }//GEN-LAST:event_histogramLabelMouseClicked
 
-    private void expansionXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionXFieldActionPerformed
-        bilinearInterpolation();
-    }//GEN-LAST:event_expansionXFieldActionPerformed
+    private void roiLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roiLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_roiLabel1MouseClicked
 
-    private void expansionYFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionYFieldActionPerformed
-        bilinearInterpolation();
-    }//GEN-LAST:event_expansionYFieldActionPerformed
+    private void grayScaleLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_grayScaleLabelMouseClicked
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        int r, g, b, rgba, average;
+        for (int i = 0; i < img.getHeight(); i++) {
+            for (int j = 0; j < img.getWidth(); j++) {
+                rgba = img.getRGB(i, j);
+                r = (rgba >> 16) & 0x000000FF;
+                g = (rgba >> 8) & 0x000000FF;
+                b = (rgba) & 0x000000FF;
+                average = (r + g + b) / 3;
+                rgba = (rgba & 0xFF000000) + (average << 16) + (average << 8) + average;
+                img.setRGB(i, j, rgba);
+            }
+        }
+        imgFin.setIcon(new ImageIcon(img));
+    }//GEN-LAST:event_grayScaleLabelMouseClicked
+
+    private void sizeXFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeXFieldActionPerformed
+        updateImageSize();
+    }//GEN-LAST:event_sizeXFieldActionPerformed
+
+    private void multiSeuil2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiSeuil2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_multiSeuil2ActionPerformed
+
+    private void paletteLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paletteLabel3MouseClicked
+
+    private void paletteLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paletteLabel4MouseClicked
+
+    private void paletteLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteLabel5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paletteLabel5MouseClicked
+
+    private void expansionXField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expansionXField1ActionPerformed
+        updateHistogram();
+    }//GEN-LAST:event_expansionXField1ActionPerformed
+
+    private void seuilSimpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seuilSimpleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seuilSimpleActionPerformed
+
+    private void multiSeuil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiSeuil1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_multiSeuil1ActionPerformed
 
     private void updateImageSize()
     {
@@ -448,9 +582,49 @@ public class mainFrame extends javax.swing.JFrame {
         String x, y;
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
         BufferedImage img = getBufferedImage(icon);
-        x = this.expansionXField.getText();
+        x = this.multiSeuil2.getText();
         y = this.expansionYField.getText();
         this.imgFin.setIcon(new ImageIcon(BilinearInterpolation.scale(img, Float.parseFloat(x) , Float.parseFloat(y))));
+    }
+    
+    private void updateHistogram()
+    {
+        int[] values = new int[256];
+        int highValue = 0;
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        
+        // Get pixel number of same color
+        for (int i = 0; i < img.getWidth(); i++) {
+            for (int j = 0; j < img.getHeight(); j++) {
+                //System.out.println((img.getRGB(i, j) & 0x000000FF));
+                values[img.getRGB(i, j) & 0x000000FF]++; // Add 1 to that color in values
+            }
+        }
+        
+        // Get color with most pixels
+        for(int i = 0; i < values.length; i++)
+        {
+            if(values[i] > values[highValue])
+                highValue = i;
+        }
+        highValueLabel.setText(String.valueOf(values[highValue]));
+        
+        BufferedImage histo = new BufferedImage(histogram.getWidth(), histogram.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = histo.createGraphics();
+        
+//        g2d.setColor(Color.BLUE);
+//        g2d.fillRect(0, 0, histo.getWidth(), histo.getHeight());
+        for(int i = 0; i < values.length; i++)
+        {
+            g2d.setColor(new Color(i, i, i));
+            g2d.drawLine(i, histo.getHeight(), i, histo.getHeight() - (int) ((double)values[i]/values[highValue]*histo.getHeight()));
+        }
+        g2d.dispose();
+        histogram.setIcon(new ImageIcon(histo));
+        
+        
+ 
     }
     /**
      * @param args the command line arguments
@@ -487,14 +661,20 @@ public class mainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel depLabel;
     private javax.swing.JLabel endColorPalette;
-    private javax.swing.JTextField expansionXField;
+    private javax.swing.JTextField expansionXField1;
     private javax.swing.JTextField expansionYField;
-    private javax.swing.JTextField extractionXField;
-    private javax.swing.JTextField extractionYField;
     private javax.swing.JLabel finLabel;
+    private javax.swing.JLabel grayScaleLabel;
+    private javax.swing.JLabel highValueLabel;
+    private javax.swing.JLabel histogram;
+    private javax.swing.JLabel histogramLabel;
     private javax.swing.JLabel imgFin;
     private javax.swing.JLabel imgSrc;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -502,10 +682,14 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel leftArrowLabel;
     private javax.swing.JLabel loadImage;
-    private javax.swing.JLabel paletteLabel;
+    private javax.swing.JTextField multiSeuil1;
+    private javax.swing.JTextField multiSeuil2;
     private javax.swing.JLabel paletteLabel1;
-    private javax.swing.JLabel paletteLabel2;
-    private javax.swing.JLabel roiLabel;
+    private javax.swing.JLabel paletteLabel3;
+    private javax.swing.JLabel paletteLabel4;
+    private javax.swing.JLabel paletteLabel5;
+    private javax.swing.JLabel roiLabel1;
+    private javax.swing.JTextField seuilSimple;
     private javax.swing.JTextField sizeXField;
     private javax.swing.JTextField sizeYField;
     private javax.swing.JLabel srcColorPalette;
