@@ -5,6 +5,7 @@
  */
 package traitementimage;
 
+import filtres.*;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -89,6 +90,8 @@ public class mainFrame extends javax.swing.JFrame {
         multiSeuil1 = new javax.swing.JTextField();
         multiSeuil2 = new javax.swing.JTextField();
         egalisationLabel = new javax.swing.JLabel();
+        paletteLabel6 = new javax.swing.JLabel();
+        filtreComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
@@ -271,8 +274,8 @@ public class mainFrame extends javax.swing.JFrame {
 
         paletteLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel3.setForeground(new java.awt.Color(238, 238, 238));
-        paletteLabel3.setText("Multi-seuillage");
-        jPanel3.add(paletteLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, -1, -1));
+        paletteLabel3.setText("Filtres");
+        jPanel3.add(paletteLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(825, 110, -1, -1));
 
         paletteLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel4.setForeground(new java.awt.Color(238, 238, 238));
@@ -343,6 +346,19 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
         jPanel3.add(egalisationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 140, -1, -1));
+
+        paletteLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel6.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel6.setText("Multi-seuillage");
+        jPanel3.add(paletteLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, -1, -1));
+
+        filtreComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Médian", "Moyen", "Gaussien", "Laplacien", "Kirsch", "Sobel", "Prewitt", "Roberts" }));
+        filtreComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filtreComboBoxActionPerformed(evt);
+            }
+        });
+        jPanel3.add(filtreComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 110, 90, -1));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 1080, 214));
 
@@ -545,6 +561,39 @@ public class mainFrame extends javax.swing.JFrame {
     private void egalisationLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_egalisationLabelMouseClicked
         histogramEgalisation();
     }//GEN-LAST:event_egalisationLabelMouseClicked
+
+    private void filtreComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtreComboBoxActionPerformed
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        
+        int index = filtreComboBox.getSelectedIndex();
+        switch(index)
+        {
+            case 0: // Médian
+                imgFin.setIcon(new ImageIcon(MedianFilter.getImage(img)));
+                break;
+            case 1: // Moyen
+                imgFin.setIcon(new ImageIcon(MeanFilter.getImage(img)));
+                break;
+            case 2: // Gaussien
+                imgFin.setIcon(new ImageIcon(GaussianFilter.getImage(img)));
+                break;
+            case 3: // Laplacien
+                imgFin.setIcon(new ImageIcon(LaplacianFilter.getImage(img)));
+                break;
+            case 4: // Kirsch
+                break;
+            case 5: // Sobel
+                break;
+            case 6: // Prewitt
+                break;
+            case 7: // Roberts
+                break;
+            default:
+                System.out.println("Pas de filtre selectionné");
+            
+        }
+    }//GEN-LAST:event_filtreComboBoxActionPerformed
 
     private void updateImageSize()
     {
@@ -770,6 +819,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel endColorPalette;
     private javax.swing.JTextField expansionXField;
     private javax.swing.JTextField expansionYField;
+    private javax.swing.JComboBox<String> filtreComboBox;
     private javax.swing.JLabel finLabel;
     private javax.swing.JLabel grayScaleLabel;
     private javax.swing.JLabel highValueLabel;
@@ -795,6 +845,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel paletteLabel3;
     private javax.swing.JLabel paletteLabel4;
     private javax.swing.JLabel paletteLabel5;
+    private javax.swing.JLabel paletteLabel6;
     private javax.swing.JLabel roiLabel1;
     private javax.swing.JTextField seuilSimple;
     private javax.swing.JTextField sizeXField;
