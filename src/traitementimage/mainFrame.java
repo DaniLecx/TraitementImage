@@ -43,6 +43,9 @@ public class mainFrame extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(34,40,49));
         paletteEnabled = roiEnabled = false;
         
+        lowThresholdTextField.setVisible(false);
+        highThresholdTextField.setVisible(false);
+        
     }
 
     /**
@@ -92,6 +95,12 @@ public class mainFrame extends javax.swing.JFrame {
         egalisationLabel = new javax.swing.JLabel();
         paletteLabel6 = new javax.swing.JLabel();
         filtreComboBox = new javax.swing.JComboBox<>();
+        paletteLabel7 = new javax.swing.JLabel();
+        seuillageComboBox = new javax.swing.JComboBox<>();
+        lowThresholdTextField = new javax.swing.JTextField();
+        highThresholdTextField = new javax.swing.JTextField();
+        paletteLabel8 = new javax.swing.JLabel();
+        binaryFilterComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(34, 40, 49));
@@ -274,13 +283,14 @@ public class mainFrame extends javax.swing.JFrame {
 
         paletteLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel3.setForeground(new java.awt.Color(238, 238, 238));
-        paletteLabel3.setText("Filtres");
-        jPanel3.add(paletteLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(825, 110, -1, -1));
+        paletteLabel3.setText("Seuillage");
+        jPanel3.add(paletteLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 170, -1, -1));
 
         paletteLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         paletteLabel4.setText("Zoom");
-        jPanel3.add(paletteLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
+        jPanel3.add(paletteLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 20, -1, -1));
 
         paletteLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         paletteLabel5.setForeground(new java.awt.Color(238, 238, 238));
@@ -358,7 +368,51 @@ public class mainFrame extends javax.swing.JFrame {
                 filtreComboBoxActionPerformed(evt);
             }
         });
-        jPanel3.add(filtreComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 110, 90, -1));
+        jPanel3.add(filtreComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 110, 100, -1));
+
+        paletteLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel7.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel7.setText("Filtres binaires");
+        jPanel3.add(paletteLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 140, -1, -1));
+
+        seuillageComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hysteresis", "Auto" }));
+        seuillageComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seuillageComboBoxActionPerformed(evt);
+            }
+        });
+        jPanel3.add(seuillageComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 170, 100, -1));
+
+        lowThresholdTextField.setForeground(new java.awt.Color(238, 238, 238));
+        lowThresholdTextField.setOpaque(false);
+        lowThresholdTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lowThresholdTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(lowThresholdTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 170, 30, -1));
+
+        highThresholdTextField.setForeground(new java.awt.Color(238, 238, 238));
+        highThresholdTextField.setOpaque(false);
+        highThresholdTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                highThresholdTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel3.add(highThresholdTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 170, 30, -1));
+
+        paletteLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        paletteLabel8.setForeground(new java.awt.Color(238, 238, 238));
+        paletteLabel8.setText("Filtres");
+        jPanel3.add(paletteLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 110, -1, -1));
+
+        binaryFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Erosion", "Dilatation", "Ouverture", "Fermeture" }));
+        binaryFilterComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                binaryFilterComboBoxActionPerformed(evt);
+            }
+        });
+        jPanel3.add(binaryFilterComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 140, 100, -1));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, 1080, 214));
 
@@ -534,15 +588,19 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_expansionXFieldActionPerformed
 
     private void seuilSimpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seuilSimpleActionPerformed
+        simpleThreshold(Integer.parseInt(seuilSimple.getText()));
+    }//GEN-LAST:event_seuilSimpleActionPerformed
+
+    private void simpleThreshold(int threshold)
+    {
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
         BufferedImage img = getBufferedImage(icon);
         int rgba;
-        int seuil = Integer.parseInt(seuilSimple.getText());
         
         for (int i = 0; i < img.getWidth(); i++) {
             for (int j = 0; j < img.getHeight(); j++) {
                 rgba = img.getRGB(i, j);
-                if((rgba & 0xFF) < seuil)
+                if((rgba & 0xFF) < threshold)
                     img.setRGB(i, j, (rgba & 0xFF000000));
                 else
                     img.setRGB(i, j, ((rgba & 0xFF000000) + 0x00FFFFFF));
@@ -552,8 +610,8 @@ public class mainFrame extends javax.swing.JFrame {
         imgFin.setIcon(new ImageIcon(img));
         
         updateHistogram();
-    }//GEN-LAST:event_seuilSimpleActionPerformed
-
+    }
+    
     private void multiSeuil1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiSeuil1ActionPerformed
         multiSeuillage();
     }//GEN-LAST:event_multiSeuil1ActionPerformed
@@ -582,12 +640,16 @@ public class mainFrame extends javax.swing.JFrame {
                 imgFin.setIcon(new ImageIcon(LaplacianFilter.getImage(img)));
                 break;
             case 4: // Kirsch
+                imgFin.setIcon(new ImageIcon(KirschFilter.getImage(img)));
                 break;
             case 5: // Sobel
+                imgFin.setIcon(new ImageIcon(SobelFilter.getImage(img)));
                 break;
             case 6: // Prewitt
+                imgFin.setIcon(new ImageIcon(PrewittFilter.getImage(img)));
                 break;
             case 7: // Roberts
+                //imgFin.setIcon(new ImageIcon(RobertsFilter.getImage(img)));
                 break;
             default:
                 System.out.println("Pas de filtre selectionné");
@@ -595,6 +657,71 @@ public class mainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_filtreComboBoxActionPerformed
 
+    private void seuillageComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seuillageComboBoxActionPerformed
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        
+        int index = seuillageComboBox.getSelectedIndex();
+        switch(index)
+        {
+            case 0: // Hysteresis
+                lowThresholdTextField.setText("0.5");
+                highThresholdTextField.setText("3");
+                lowThresholdTextField.setVisible(true);
+                highThresholdTextField.setVisible(true);
+                getHysteresisThreshold();
+                
+                break;
+            case 1: // Auto
+                lowThresholdTextField.setVisible(false);
+                highThresholdTextField.setVisible(false);
+                int threshold = AutoThreshold.getThreshold(img);
+                simpleThreshold(threshold);
+                break;
+            default:
+                System.out.println("Pas de filtre selectionné");
+        }
+    }//GEN-LAST:event_seuillageComboBoxActionPerformed
+
+    private void lowThresholdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowThresholdTextFieldActionPerformed
+        getHysteresisThreshold();
+    }//GEN-LAST:event_lowThresholdTextFieldActionPerformed
+
+    private void highThresholdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highThresholdTextFieldActionPerformed
+        getHysteresisThreshold();
+    }//GEN-LAST:event_highThresholdTextFieldActionPerformed
+
+    private void binaryFilterComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_binaryFilterComboBoxActionPerformed
+        int index = binaryFilterComboBox.getSelectedIndex();
+        switch(index)
+        {
+            case 0: // Erosion
+                break;
+            case 1: // Dilatation
+                break;
+            case 2: // Ouverture
+                break;
+            case 3: // Fermeture
+                break;
+            default:
+                System.out.println("Pas de filtre binaire selectionné");
+        }
+    }//GEN-LAST:event_binaryFilterComboBoxActionPerformed
+
+    
+    private void getHysteresisThreshold(){
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
+        
+        HysteresisThreshold detector = new HysteresisThreshold();
+        detector.setLowThreshold(Float.parseFloat(lowThresholdTextField.getText()));
+        detector.setHighThreshold(Float.parseFloat(highThresholdTextField.getText()));
+        detector.setSourceImage(img);
+        detector.process();
+        
+        imgFin.setIcon(new ImageIcon(detector.getEdgesImage()));
+    }
+    
     private void updateImageSize()
     {
         ImageIcon icon = (ImageIcon) imgSrc.getIcon();
@@ -814,6 +941,7 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> binaryFilterComboBox;
     private javax.swing.JLabel depLabel;
     private javax.swing.JLabel egalisationLabel;
     private javax.swing.JLabel endColorPalette;
@@ -822,6 +950,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> filtreComboBox;
     private javax.swing.JLabel finLabel;
     private javax.swing.JLabel grayScaleLabel;
+    private javax.swing.JTextField highThresholdTextField;
     private javax.swing.JLabel highValueLabel;
     private javax.swing.JLabel histogram;
     private javax.swing.JLabel histogramLabel;
@@ -839,6 +968,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel leftArrowLabel;
     private javax.swing.JLabel loadImage;
+    private javax.swing.JTextField lowThresholdTextField;
     private javax.swing.JTextField multiSeuil1;
     private javax.swing.JTextField multiSeuil2;
     private javax.swing.JLabel paletteLabel1;
@@ -846,8 +976,11 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel paletteLabel4;
     private javax.swing.JLabel paletteLabel5;
     private javax.swing.JLabel paletteLabel6;
+    private javax.swing.JLabel paletteLabel7;
+    private javax.swing.JLabel paletteLabel8;
     private javax.swing.JLabel roiLabel1;
     private javax.swing.JTextField seuilSimple;
+    private javax.swing.JComboBox<String> seuillageComboBox;
     private javax.swing.JTextField sizeXField;
     private javax.swing.JTextField sizeYField;
     private javax.swing.JLabel srcColorPalette;
