@@ -43,7 +43,6 @@ public class AutoThreshold {
         }
 
         // Calculate histogram and find the level with the max value
-        // Note: the max level value isn't required by the Otsu method
         ptr = 0;
         maxLevelValue = 0;
         while (ptr < srcData.length) {
@@ -71,20 +70,20 @@ public class AutoThreshold {
         threshold = 0;
 
         for (int t = 0; t < 256; t++) {
-            wB += histData[t];					// Weight Background
+            wB += histData[t];	// Weight Background
             if (wB == 0) {
                 continue;
             }
 
-            wF = total - wB;						// Weight Foreground
+            wF = total - wB;		// Weight Foreground
             if (wF == 0) {
                 break;
             }
 
             sumB += (float) (t * histData[t]);
 
-            float mB = sumB / wB;				// Mean Background
-            float mF = (sum - sumB) / wF;		// Mean Foreground
+            float mB = sumB / wB;		// Mean Background
+            float mF = (sum - sumB) / wF;	// Mean Foreground
 
             // Calculate Between Class Variance
             float varBetween = (float) wB * (float) wF * (mB - mF) * (mB - mF);
@@ -95,15 +94,6 @@ public class AutoThreshold {
                 threshold = t;
             }
         }
-
-        // Apply threshold to create binary image
-//        if (monoData != null) {
-//            ptr = 0;
-//            while (ptr < srcData.length) {
-//                monoData[ptr] = ((0xFF & srcData[ptr]) >= threshold) ? (byte) 255 : 0;
-//                ptr++;
-//            }
-//        }
 
         return threshold;
     }

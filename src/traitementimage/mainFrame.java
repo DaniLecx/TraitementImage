@@ -650,7 +650,7 @@ public class mainFrame extends javax.swing.JFrame {
                 imgFin.setIcon(new ImageIcon(PrewittFilter.getImage(img)));
                 break;
             case 7: // Roberts
-                //imgFin.setIcon(new ImageIcon(RobertsFilter.getImage(img)));
+                imgFin.setIcon(new ImageIcon(RobertsFilter.getImage(img)));
                 break;
             default:
                 System.out.println("Pas de filtre selectionné");
@@ -671,7 +671,6 @@ public class mainFrame extends javax.swing.JFrame {
                 lowThresholdTextField.setVisible(true);
                 highThresholdTextField.setVisible(true);
                 getHysteresisThreshold();
-                
                 break;
             case 1: // Auto
                 lowThresholdTextField.setVisible(false);
