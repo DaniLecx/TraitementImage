@@ -5,6 +5,7 @@
  */
 package traitementimage;
 
+import binaryFilters.*;
 import filtres.*;
 import java.awt.AWTException;
 import java.awt.Color;
@@ -692,16 +693,22 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_highThresholdTextFieldActionPerformed
 
     private void binaryFilterComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_binaryFilterComboBoxActionPerformed
+        ImageIcon icon = (ImageIcon) imgSrc.getIcon();
+        BufferedImage img = getBufferedImage(icon);
         int index = binaryFilterComboBox.getSelectedIndex();
         switch(index)
         {
             case 0: // Erosion
+                imgFin.setIcon(new ImageIcon(Erosion.getImage(img)));
                 break;
             case 1: // Dilatation
+                imgFin.setIcon(new ImageIcon(Dilatation.getImage(img)));
                 break;
             case 2: // Ouverture
+                imgFin.setIcon(new ImageIcon(Dilatation.getImage(Erosion.getImage(img))));
                 break;
             case 3: // Fermeture
+                imgFin.setIcon(new ImageIcon(Erosion.getImage(Dilatation.getImage(img))));
                 break;
             default:
                 System.out.println("Pas de filtre binaire selectionné");
